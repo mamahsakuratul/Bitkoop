@@ -98,3 +98,13 @@ contract Bitkoop {
 
     function redeemVoucher(bytes32 voucherId, uint256 valueWei) external whenNotPaused {
         if (used[voucherId]) revert Bitkoop_AlreadyUsed();
+        if (valueWei == 0) revert Bitkoop_ZeroAmount();
+        if (block.number < lastRedeemBlock[msg.sender] + REDEMPTION_COOLDOWN) revert Bitkoop_Cooldown();
+        if (_slots.length >= CAP_REDEMPTIONS) revert Bitkoop_CapReached();
+        if (valueWei > MAX_VALUE_WEI) revert Bitkoop_ValueTooHigh();
+
+        uint256 feeWei = (valueWei * FEE_BP) / BP;
+        totalFeesWei += feeWei;
+
+        used[voucherId] = true;
+        lastRedeemBlock[msg.sender] = block.number;
