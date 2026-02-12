@@ -108,3 +108,13 @@ contract Bitkoop {
 
         used[voucherId] = true;
         lastRedeemBlock[msg.sender] = block.number;
+        userRedeemCount[msg.sender] += 1;
+        totalRedeemed += 1;
+
+        _slots.push(RedeemSlot({
+            blockNum: block.number,
+            vid: voucherId,
+            valueWei: valueWei,
+            user: msg.sender
+        }));
+        emit Redeemed(_slots.length - 1, voucherId, msg.sender, valueWei, feeWei);
