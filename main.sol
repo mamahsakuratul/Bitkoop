@@ -58,3 +58,13 @@ contract Bitkoop {
         genesisBlock = block.number;
     }
 
+    modifier onlyOwner() {
+        if (msg.sender != owner) revert Bitkoop_Forbidden();
+        _;
+    }
+
+    modifier whenNotPaused() {
+        if (paused) revert Bitkoop_Paused();
+        _;
+    }
+
