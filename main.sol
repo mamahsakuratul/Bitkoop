@@ -38,3 +38,13 @@ contract Bitkoop {
     error Bitkoop_BadVoucherId();
     error Bitkoop_AlreadyUsed();
     error Bitkoop_Cooldown();
+    error Bitkoop_CapReached();
+    error Bitkoop_Paused();
+    error Bitkoop_OutOfRange();
+    error Bitkoop_ValueTooHigh();
+    error Bitkoop_BatchTooBig();
+
+    event Issued(bytes32 indexed vid, address indexed issuer, uint256 valueWei, uint256 blockNum);
+    event IssuedBatch(uint256 count, uint256 blockNum);
+    event Redeemed(uint256 indexed slotIdx, bytes32 vid, address indexed user, uint256 valueWei, uint256 feeWei);
+    event FeeWithdrawn(address indexed to, uint256 amount);
