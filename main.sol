@@ -48,3 +48,13 @@ contract Bitkoop {
     event IssuedBatch(uint256 count, uint256 blockNum);
     event Redeemed(uint256 indexed slotIdx, bytes32 vid, address indexed user, uint256 valueWei, uint256 feeWei);
     event FeeWithdrawn(address indexed to, uint256 amount);
+    event PauseSet(bool paused);
+    event OwnerNote(bytes32 topic, uint256 data);
+
+    constructor(address _owner, address _feeCollector) {
+        if (_owner == address(0)) revert Bitkoop_ZeroAddress();
+        owner = _owner;
+        feeCollector = _feeCollector == address(0) ? _owner : _feeCollector;
+        genesisBlock = block.number;
+    }
+
