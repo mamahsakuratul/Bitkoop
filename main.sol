@@ -78,3 +78,13 @@ contract Bitkoop {
     }
 
     function issueVouchersBatch(
+        bytes32[] calldata voucherIds,
+        address[] calldata issuers,
+        uint256[] calldata valuesWei
+    ) external onlyOwner whenNotPaused {
+        uint256 n = voucherIds.length;
+        if (n == 0 || n > BATCH_ISSUE_LIMIT) revert Bitkoop_BatchTooBig();
+        if (issuers.length != n || valuesWei.length != n) revert Bitkoop_Forbidden();
+        for (uint256 i = 0; i < n; i++) {
+            if (issuers[i] == address(0)) revert Bitkoop_ZeroAddress();
+            if (valuesWei[i] == 0) revert Bitkoop_ZeroAmount();
