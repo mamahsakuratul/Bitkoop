@@ -28,3 +28,13 @@ contract Bitkoop {
         address user;
     }
     RedeemSlot[] private _slots;
+    mapping(bytes32 => bool) public used;
+    mapping(address => uint256) public lastRedeemBlock;
+    mapping(address => uint256) public userRedeemCount;
+
+    error Bitkoop_Forbidden();
+    error Bitkoop_ZeroAddress();
+    error Bitkoop_ZeroAmount();
+    error Bitkoop_BadVoucherId();
+    error Bitkoop_AlreadyUsed();
+    error Bitkoop_Cooldown();
