@@ -18,3 +18,13 @@ contract Bitkoop {
 
     bool public paused;
     uint256 public totalIssued;
+    uint256 public totalRedeemed;
+    uint256 public totalFeesWei;
+
+    struct RedeemSlot {
+        uint256 blockNum;
+        bytes32 vid;
+        uint256 valueWei;
+        address user;
+    }
+    RedeemSlot[] private _slots;
