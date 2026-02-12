@@ -68,3 +68,13 @@ contract Bitkoop {
         _;
     }
 
+    function issueVoucher(bytes32 voucherId, address issuer, uint256 valueWei) external onlyOwner whenNotPaused {
+        if (issuer == address(0)) revert Bitkoop_ZeroAddress();
+        if (valueWei == 0) revert Bitkoop_ZeroAmount();
+        if (voucherId == bytes32(0)) revert Bitkoop_BadVoucherId();
+        if (valueWei > MAX_VALUE_WEI) revert Bitkoop_ValueTooHigh();
+        totalIssued += 1;
+        emit Issued(voucherId, issuer, valueWei, block.number);
+    }
+
+    function issueVouchersBatch(
