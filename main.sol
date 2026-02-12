@@ -88,3 +88,13 @@ contract Bitkoop {
         for (uint256 i = 0; i < n; i++) {
             if (issuers[i] == address(0)) revert Bitkoop_ZeroAddress();
             if (valuesWei[i] == 0) revert Bitkoop_ZeroAmount();
+            if (voucherIds[i] == bytes32(0)) revert Bitkoop_BadVoucherId();
+            if (valuesWei[i] > MAX_VALUE_WEI) revert Bitkoop_ValueTooHigh();
+            totalIssued += 1;
+            emit Issued(voucherIds[i], issuers[i], valuesWei[i], block.number);
+        }
+        emit IssuedBatch(n, block.number);
+    }
+
+    function redeemVoucher(bytes32 voucherId, uint256 valueWei) external whenNotPaused {
+        if (used[voucherId]) revert Bitkoop_AlreadyUsed();
