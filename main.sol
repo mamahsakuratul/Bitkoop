@@ -128,3 +128,13 @@ contract Bitkoop {
     function withdrawFees(address payable to) external onlyOwner {
         if (to == address(0)) revert Bitkoop_ZeroAddress();
         uint256 amount = address(this).balance;
+        if (amount == 0) return;
+        (bool ok,) = to.call{value: amount}("");
+        if (!ok) revert Bitkoop_Forbidden();
+        emit FeeWithdrawn(to, amount);
+    }
+
+    function logNote(bytes32 topic, uint256 data) external onlyOwner {
+        emit OwnerNote(topic, data);
+    }
+
