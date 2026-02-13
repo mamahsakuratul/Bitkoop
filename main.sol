@@ -157,3 +157,4 @@ contract Bitkoop {
         return genesisBlock;
     }
 }
+
