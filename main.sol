@@ -148,3 +148,12 @@ contract Bitkoop {
         uint256 valueWei,
         address user
     ) {
+        if (index >= _slots.length) revert Bitkoop_OutOfRange();
+        RedeemSlot storage s = _slots[index];
+        return (s.blockNum, s.vid, s.valueWei, s.user);
+    }
+
+    function getGenesisBlock() external view returns (uint256) {
+        return genesisBlock;
+    }
+}
