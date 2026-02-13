@@ -118,3 +118,13 @@ contract Bitkoop {
             user: msg.sender
         }));
         emit Redeemed(_slots.length - 1, voucherId, msg.sender, valueWei, feeWei);
+    }
+
+    function setPaused(bool _paused) external onlyOwner {
+        paused = _paused;
+        emit PauseSet(_paused);
+    }
+
+    function withdrawFees(address payable to) external onlyOwner {
+        if (to == address(0)) revert Bitkoop_ZeroAddress();
+        uint256 amount = address(this).balance;
