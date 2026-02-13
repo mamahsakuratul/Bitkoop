@@ -138,3 +138,13 @@ contract Bitkoop {
         emit OwnerNote(topic, data);
     }
 
+    function slotCount() external view returns (uint256) {
+        return _slots.length;
+    }
+
+    function getSlot(uint256 index) external view returns (
+        uint256 blockNum,
+        bytes32 vid,
+        uint256 valueWei,
+        address user
+    ) {
